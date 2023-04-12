@@ -17,6 +17,7 @@ const tokenNames = {
 // Set lifetime to 10 minutes
 const lifetime = process.env.LIFETIME_SECONDS || 10 * 60;
 
+// Returns the token stats and a timestamp `{data: {totalIssuance, totalTransferable, totalLocked, totalReserved}, timestamp}`
 async function fetchNetworks(network) {
     const websocketUrl = websocketUrls[network];
     const tokenName = tokenNames[network];
@@ -39,7 +40,7 @@ async function fetchNetworks(network) {
 
     if (memcached) {
         try {
-            const result = await new Promise((resolve, reject) => {
+            const cachedData = await new Promise((resolve, reject) => {
                 console.log("Checking cache for key", cacheKey);
                 memcached.get(cacheKey, (err, data) => {
                     if (err) {
@@ -52,9 +53,10 @@ async function fetchNetworks(network) {
                 });
             })
 
-            if (result) {
+            if (cachedData) {
+                console.log("Returning cached data");
                 memcached.end();
-                return result.data;
+                return cachedData;
             }
         } catch (error) {
             console.log("Error while fetching from cache", error);
@@ -111,11 +113,16 @@ async function fetchNetworks(network) {
         totalReserved: format(totalReserved),
     };
 
+    const timestampedData = {
+        data,
+        timestamp: new Date().getTime(),
+    }
+
     if (memcached) {
         console.log("Setting cache for key", cacheKey);
         try {
             await new Promise((resolve, reject) => {
-                    memcached.set(cacheKey, data, lifetime, (err) => {
+                    memcached.set(cacheKey, timestampedData, lifetime, (err) => {
                         if (err) {
                             reject(err)
                         } else {
@@ -133,7 +140,7 @@ async function fetchNetworks(network) {
 
     api.disconnect();
 
-    return data;
+    return timestampedData;
 }
 
 const handler = async (event, context) => {
@@ -163,9 +170,8 @@ const handler = async (event, context) => {
         };
     }
 
-    const stats = await fetchNetworks(network);
-
-    const lastModified = new Date().toUTCString();
+    const timestampedData = await fetchNetworks(network);
+    const lastModified = new Date(timestampedData.timestamp).toUTCString();
 
     return {
         status: '200', statusDescription: 'OK', headers: {
@@ -174,7 +180,7 @@ const handler = async (event, context) => {
             }], 'last-modified': [{
                 key: 'Last-Modified', value: lastModified,
             }],
-        }, body: stats,
+        }, body: timestampedData.data,
     };
 };
 
