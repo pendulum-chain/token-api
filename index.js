@@ -3,17 +3,19 @@ const Memcached = require('memcached');
 
 const websocketUrls = {
     // Capitalization is important!
-    amplitude: "wss://pencol-kus-02.pendulumchain.tech", pendulum: "wss://rpc-pendulum.prd.pendulumchain.tech",
+    amplitude: process.env.AMPLITUDE_WSS || "wss://pencol-kus-02.pendulumchain.tech",
+    pendulum: process.env.PENDULUM_WSS || "wss://rpc-pendulum.prd.pendulumchain.tech",
 };
 
-const elasticacheURL = 'stats-cluster.v37yj7.0001.use1.cache.amazonaws.com:11211';
+const cacheUrl = process.env.CACHE_URL || undefined;
+const cachePort = process.env.CACHE_PORT || 11211;
 
 const tokenNames = {
     amplitude: "AMPE", pendulum: "PEN",
 };
 
 // Set lifetime to 10 minutes
-const lifetime = 10 * 60;
+const lifetime = process.env.LIFETIME_SECONDS || 10 * 60;
 
 async function fetchNetworks(network) {
     const websocketUrl = websocketUrls[network];
@@ -21,7 +23,8 @@ async function fetchNetworks(network) {
 
     console.log(`Determine issuance on ${network} ...`);
 
-    const memcached = new Memcached(elasticacheURL, {
+    const cacheEndpoint = `${cacheUrl}:${cachePort}`;
+    const memcached = cacheUrl && new Memcached(cacheEndpoint, {
         timeout: 5000,
         retries: 0,
         failures: 1,
@@ -34,38 +37,35 @@ async function fetchNetworks(network) {
     // We switch to a different cache key for each network
     const cacheKey = `token-stats-${network}`;
 
-    try {
-        const result = await new Promise((resolve, reject) => {
-            console.log("Checking cache for key", cacheKey);
-            memcached.get(cacheKey, (err, data) => {
-                if (err) {
-                    reject(err);
-                }
+    if (memcached) {
+        try {
+            const result = await new Promise((resolve, reject) => {
+                console.log("Checking cache for key", cacheKey);
+                memcached.get(cacheKey, (err, data) => {
+                    if (err) {
+                        reject(err);
+                    }
 
-                if (data) {
-                    resolve(data);
-                }
-            });
-        })
+                    if (data) {
+                        resolve(data);
+                    }
+                });
+            })
 
-        if (result) {
-            const expires = new Date(result.expires);
-            console.log(`Cache is valid until ${expires.toUTCString()}`);
-
-            if (expires.getTime() > new Date().getTime()) {
-                console.log("Returning cached data");
+            if (result) {
+                memcached.end();
                 return result.data;
             }
+        } catch (error) {
+            console.log("Error while fetching from cache", error);
         }
-    } catch (error) {
-        console.log("Error while fetching from cache", error);
     }
 
 
     const wsProvider = new WsProvider(websocketUrl);
-    console.log(`Connecting to node ${websocketUrl}`);
+    console.log(`Connecting to node ${websocketUrl}...`);
     const api = await ApiPromise.create({provider: wsProvider, noInitWarn: true});
-    console.log("Connected to node");
+    console.log(`Connected to node ${websocketUrl}`);
 
     const accounts = await api.query.system.account.entries();
 
@@ -111,29 +111,26 @@ async function fetchNetworks(network) {
         totalReserved: format(totalReserved),
     };
 
-    console.log("Setting cache for key", cacheKey);
-    try {
-        const cacheData = {
-            data,
-            // We store the timestamp when the data expires in the cache so we can check if the cache is still valid
-            expires: new Date().getTime() + lifetime * 1000,
-        };
+    if (memcached) {
+        console.log("Setting cache for key", cacheKey);
+        try {
+            await new Promise((resolve, reject) => {
+                    memcached.set(cacheKey, data, lifetime, (err) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve();
+                        }
+                    });
+                }
+            );
+        } catch (error) {
+            console.log("Error while setting cache", error);
+        }
 
-        await new Promise((resolve, reject) => {
-                memcached.set(cacheKey, cacheData, lifetime, (err) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        );
-    } catch (error) {
-        console.log("Error while setting cache", error);
+        memcached.end();
     }
 
-    memcached.end();
     api.disconnect();
 
     return data;
