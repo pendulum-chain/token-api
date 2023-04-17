@@ -5,20 +5,20 @@ const compress = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require('helmet');
-const routes = require('../api/routes/v1');
+const routes = require('../api/routes/token');
 const { logs } = require('./vars');
 const error = require('../api/middlewares/error');
 
 /**
-* Express instance
-* @public
-*/
+ * Express instance
+ * @public
+ */
 const app = express();
 
 // request logging. dev: console | production: file
 app.use(morgan(logs));
 
-// parse body params and attache them to req.body
+// parse body params and attach them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -35,8 +35,8 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
-// mount api v1 routes
-app.use('/v1', routes);
+// mount api token routes
+app.use('/token', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

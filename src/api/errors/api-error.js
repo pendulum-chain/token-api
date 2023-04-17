@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const ExtendableError = require('./extandable-error');
+const ExtendableError = require('./extendable-error');
 
 /**
  * Class representing an API error.

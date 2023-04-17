@@ -1,18 +1,18 @@
 const express = require('express');
+const statsRoutes = require('./stats.route');
 
 const router = express.Router();
 
 /**
- * GET v1/status
+ * GET token/status
  */
 router.get('/status', (req, res) => res.send('OK'));
 
 /**
- * GET v1/docs
+ * GET token/docs
  */
 router.use('/docs', express.static('docs'));
 
-// router.use('/users', userRoutes);
-// router.use('/auth', authRoutes);
+router.use('/stats', statsRoutes);
 
 module.exports = router;
