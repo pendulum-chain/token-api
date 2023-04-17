@@ -17,6 +17,6 @@ router
    *
    * @apiSuccess {Object[]} tokenStats List of token stats.
    */
-  .get(validate(getStats), controller.list);
+  .get(validate(getStats), controller.get);
 
 module.exports = router;

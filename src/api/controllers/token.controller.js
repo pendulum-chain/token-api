@@ -1,12 +1,23 @@
+const memcached = require('../../config/memcached');
+
+const statsCacheKey = 'token-stats';
+
 /**
  * Get token stats
  * @public
  */
-exports.list = async (req, res, next) => {
+exports.get = async (req, res, next) => {
   try {
-    const stats = {
-      total: 0,
-    };
+    let stats;
+
+    if (memcached.isConnected()) {
+      stats = await memcached.get(statsCacheKey);
+    } else {
+      stats = {
+        totalSupply: 0,
+      };
+    }
+
     res.json(stats);
   } catch (error) {
     next(error);

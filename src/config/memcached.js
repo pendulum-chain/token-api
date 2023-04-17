@@ -15,17 +15,49 @@ const defaultOptions = {
   lifetime: cacheLifetime,
 };
 
+const endpoint = cacheEndpoint || 'http://localhost:11211';
+const cache = new Memcached(endpoint, defaultOptions);
+
 /**
  * Connect to memcached server
  *
  * @returns {object} Memcached connection
  * @public
  */
-exports.connect = () => {
-  const endpoint = cacheEndpoint || 'http://localhost:11211';
-
+exports.connect = () => new Promise((resolve, reject) => {
   console.log(`Connecting to Memcache at ${endpoint}...`);
-  const cache = new Memcached(endpoint, defaultOptions);
-  console.log(`Connected to Memcache at ${endpoint}`);
-  return cache;
-};
+
+  cache.connect(endpoint, (err) => {
+    if (err) {
+      reject(err);
+    } else {
+      console.log(`Connected to Memcache at ${endpoint}`);
+      resolve(cache);
+    }
+  });
+});
+
+exports.isConnected = () => cache.connections.length > 0;
+
+exports.get = (key) => new Promise((resolve, reject) => {
+  cache.get(key, (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+
+exports.set = (key, value) => new Promise((resolve, reject) => {
+  // Use 10 minutes as default
+  const lifetime = cacheLifetime || 600;
+
+  cache.set(key, value, lifetime, (err) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve();
+    }
+  });
+});
