@@ -34,6 +34,7 @@
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit"
   },
   "dependencies": {
+    "@polkadot/api": "^10.3.4",
     "axios": "^0.21.1",
     "bcryptjs": "2.4.3",
     "bluebird": "^3.5.0",

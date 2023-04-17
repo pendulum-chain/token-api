@@ -5,7 +5,7 @@ const logger = require('./config/logger');
 const app = require('./config/express');
 const memcached = require('./config/memcached');
 
-// open mongoose connection
+// open memcached connection
 memcached.connect().catch((err) => {
   logger.error('Error connecting to memcached instance', err);
 });

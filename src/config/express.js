@@ -5,7 +5,7 @@ const compress = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require('helmet');
-const routes = require('../api/routes/token');
+const routes = require('../api/routes/v1');
 const { logs } = require('./vars');
 const error = require('../api/middlewares/error');
 
@@ -36,7 +36,7 @@ app.use(helmet());
 app.use(cors());
 
 // mount api token routes
-app.use('/token', routes);
+app.use('/api/v1', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

@@ -1,9 +1,6 @@
 const Memcached = require('memcached');
 const { cacheEndpoint, cacheLifetime } = require('./vars');
 
-// // set mongoose Promise to Bluebird
-// Memcached.Promise = Promise;
-
 const defaultOptions = {
   timeout: 5000,
   retries: 0,
@@ -15,7 +12,7 @@ const defaultOptions = {
   lifetime: cacheLifetime,
 };
 
-const endpoint = cacheEndpoint || 'http://localhost:11211';
+const endpoint = cacheEndpoint;
 const cache = new Memcached(endpoint, defaultOptions);
 
 /**
@@ -50,10 +47,7 @@ exports.get = (key) => new Promise((resolve, reject) => {
 });
 
 exports.set = (key, value) => new Promise((resolve, reject) => {
-  // Use 10 minutes as default
-  const lifetime = cacheLifetime || 600;
-
-  cache.set(key, value, lifetime, (err) => {
+  cache.set(key, value, cacheLifetime, (err) => {
     if (err) {
       reject(err);
     } else {

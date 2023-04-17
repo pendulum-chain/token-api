@@ -8,9 +8,9 @@ require('dotenv-safe').config({
 module.exports = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
-  amplitudeWss: process.env.AMLIPUTE_WSS,
-  pendulumWss: process.env.PENDULUM_WSS,
-  cacheEndpoint: process.env.CACHE_URI,
-  cacheLifetime: process.env.CACHE_LIFETIME_SECONDS,
+  amplitudeWss: process.env.AMPLITUDE_WSS || 'wss://rpc-amplitude.pendulumchain.tech',
+  pendulumWss: process.env.PENDULUM_WSS || 'wss://rpc-pendulum.prd.pendulumchain.tech',
+  cacheEndpoint: process.env.CACHE_URI || 'http://localhost:11211',
+  cacheLifetime: process.env.CACHE_LIFETIME_SECONDS || 600,
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
 };
