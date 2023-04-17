@@ -7,6 +7,7 @@
     "no-multi-str": 0
   },
   "env": {
+    "es2020": true,
     "node": true,
     "mocha": true
   },
