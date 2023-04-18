@@ -2,13 +2,7 @@
  * @extends Error
  */
 class ExtendableError extends Error {
-  constructor({
-    message,
-    errors,
-    status,
-    isPublic,
-    stack,
-  }) {
+  constructor({ message, errors, status, isPublic, stack }) {
     super(message);
     this.name = this.constructor.name;
     this.message = message;

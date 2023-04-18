@@ -1,5 +1,5 @@
-const Memcached = require('memcached');
-const { cacheEndpoint, cacheLifetime } = require('./vars');
+const Memcached = require("memcached");
+const { cacheEndpoint, cacheLifetime } = require("./vars");
 
 const defaultOptions = {
   timeout: 5000,
@@ -21,37 +21,40 @@ const cache = new Memcached(endpoint, defaultOptions);
  * @returns {object} Memcached connection
  * @public
  */
-exports.connect = () => new Promise((resolve, reject) => {
-  console.log(`Connecting to Memcache at ${endpoint}...`);
+exports.connect = () =>
+  new Promise((resolve, reject) => {
+    console.log(`Connecting to Memcache at ${endpoint}...`);
 
-  cache.connect(endpoint, (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      console.log(`Connected to Memcache at ${endpoint}`);
-      resolve(cache);
-    }
+    cache.connect(endpoint, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(`Connected to Memcache at ${endpoint}`);
+        resolve(cache);
+      }
+    });
   });
-});
 
 exports.isConnected = () => cache.connections.length > 0;
 
-exports.get = (key) => new Promise((resolve, reject) => {
-  cache.get(key, (err, data) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(data);
-    }
+exports.get = (key) =>
+  new Promise((resolve, reject) => {
+    cache.get(key, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
   });
-});
 
-exports.set = (key, value) => new Promise((resolve, reject) => {
-  cache.set(key, value, cacheLifetime, (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve();
-    }
+exports.set = (key, value) =>
+  new Promise((resolve, reject) => {
+    cache.set(key, value, cacheLifetime, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
   });
-});

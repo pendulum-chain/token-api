@@ -1,10 +1,10 @@
-const express = require('express');
-const controller = require('../../controllers/token.controller');
+const express = require("express");
+const controller = require("../../controllers/token.controller");
 
 const router = express.Router({ mergeParams: true });
 
 router
-  .route('/')
+  .route("/")
   /**
    * @api {get} token/stats List token stats
    * @apiDescription Get the current token stats

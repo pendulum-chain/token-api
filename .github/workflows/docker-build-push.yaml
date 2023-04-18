@@ -1,7 +1,7 @@
 name: Docker Build and Push
 on:
   workflow_run:
-    workflows: ['CI']
+    workflows: ["CI"]
     branches:
       - main
       - v2
@@ -27,7 +27,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_release_rules: chore:patch:Chores
-          tag_prefix: ''
+          tag_prefix: ""
 
       - name: Create a GitHub release
         uses: actions/create-release@v1
