@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 7
+  version: 6
   cacheKey: 9
 
 "@babel/code-frame@npm:7.12.11":
@@ -348,6 +348,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hapi/hoek@npm:^9.0.0":
+  version: 9.3.0
+  resolution: "@hapi/hoek@npm:9.3.0"
+  checksum: 8/4771c7a776242c3c022b168046af4e324d116a9d2e1d60631ee64f474c6e38d1bb07092d898bf95c7bc5d334c5582798a1456321b2e53ca817d4e7c88bc25b43
+  languageName: node
+  linkType: hard
+
+"@hapi/topo@npm:^5.0.0":
+  version: 5.1.0
+  resolution: "@hapi/topo@npm:5.1.0"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+  checksum: 8/604dfd5dde76d5c334bd03f9001fce69c7ce529883acf92da96f4fe7e51221bf5e5110e964caca287a6a616ba027c071748ab636ff178ad750547fba611d6014
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.5.0":
   version: 0.5.0
   resolution: "@humanwhocodes/config-array@npm:0.5.0"
@@ -479,54 +495,54 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pendulum-network/token-api@workspace:."
   dependencies:
-    "@polkadot/api": "npm:^10.3.4"
-    apidoc: "npm:^0.28.1"
-    axios: "npm:^0.21.1"
-    bcryptjs: "npm:2.4.3"
-    bluebird: "npm:^3.5.0"
-    body-parser: "npm:^1.17.0"
-    chai: "npm:^4.1.0"
-    chai-as-promised: "npm:^7.1.1"
-    compression: "npm:^1.6.2"
-    cors: "npm:^2.8.3"
-    coveralls: "npm:^3.0.0"
-    cross-env: "npm:^7.0.3"
-    dotenv-safe: "npm:^8.2.0"
-    email-templates: "npm:^6.0.3"
-    eslint: "npm:^7.29.0"
-    eslint-config-airbnb-base: "npm:^14.2.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-import: "npm:^2.2.0"
-    express: "npm:^4.15.2"
-    express-rate-limit: "npm:^6.7.0"
-    express-validation: "npm:^1.0.2"
-    helmet: "npm:^4.6.0"
-    http-status: "npm:^1.0.1"
-    husky: "npm:^3.0.7"
-    joi: "npm:^10.4.1"
-    jwt-simple: "npm:0.5.6"
-    lodash: "npm:^4.17.4"
-    memcached: "npm:^2.2.2"
-    method-override: "npm:^3.0.0"
-    mocha: "npm:^6.2.2"
-    moment-timezone: "npm:^0.5.13"
-    mongoose: "npm:^5.2.17"
-    morgan: "npm:^1.8.1"
-    nodemailer: "npm:^6.3.1"
-    nodemon: "npm:^2.0.1"
-    nyc: "npm:^15.1.0"
-    opn-cli: "npm:^5.0.0"
-    passport: "npm:^0.4.0"
-    passport-http-bearer: "npm:^1.0.1"
-    passport-jwt: "npm:4.0.0"
-    pm2: "npm:^5.1.0"
-    prettier: "npm:^2.8.7"
-    pug: "npm:^3.0.1"
-    sinon: "npm:^7.5.0"
-    sinon-chai: "npm:^3.0.0"
-    supertest: "npm:^6.1.3"
-    uuid: "npm:^3.1.0"
-    winston: "npm:^3.1.0"
+    "@polkadot/api": ^10.3.4
+    apidoc: ^0.28.1
+    axios: ^0.21.1
+    bcryptjs: 2.4.3
+    bluebird: ^3.5.0
+    body-parser: ^1.17.0
+    chai: ^4.1.0
+    chai-as-promised: ^7.1.1
+    compression: ^1.6.2
+    cors: ^2.8.3
+    coveralls: ^3.0.0
+    cross-env: ^7.0.3
+    dotenv-safe: ^8.2.0
+    email-templates: ^6.0.3
+    eslint: ^7.29.0
+    eslint-config-airbnb-base: ^14.2.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-import: ^2.2.0
+    express: ^4.15.2
+    express-rate-limit: ^6.7.0
+    express-validation: ^4.1.0
+    helmet: ^4.6.0
+    http-status: ^1.0.1
+    husky: ^3.0.7
+    joi: ^10.4.1
+    jwt-simple: 0.5.6
+    lodash: ^4.17.4
+    memcached: ^2.2.2
+    method-override: ^3.0.0
+    mocha: ^6.2.2
+    moment-timezone: ^0.5.13
+    mongoose: ^5.2.17
+    morgan: ^1.8.1
+    nodemailer: ^6.3.1
+    nodemon: ^2.0.1
+    nyc: ^15.1.0
+    opn-cli: ^5.0.0
+    passport: ^0.4.0
+    passport-http-bearer: ^1.0.1
+    passport-jwt: 4.0.0
+    pm2: ^5.1.0
+    prettier: ^2.8.7
+    pug: ^3.0.1
+    sinon: ^7.5.0
+    sinon-chai: ^3.0.0
+    supertest: ^6.1.3
+    uuid: ^3.1.0
+    winston: ^3.1.0
   languageName: unknown
   linkType: soft
 
@@ -1003,6 +1019,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sideway/address@npm:^4.1.3":
+  version: 4.1.4
+  resolution: "@sideway/address@npm:4.1.4"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+  checksum: 8/b9fca2a93ac2c975ba12e0a6d97853832fb1f4fb02393015e012b47fa916a75ca95102d77214b2a29a2784740df2407951af8c5dde054824c65577fd293c4cdb
+  languageName: node
+  linkType: hard
+
+"@sideway/formula@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@sideway/formula@npm:3.0.1"
+  checksum: 8/e4beeebc9dbe2ff4ef0def15cec0165e00d1612e3d7cea0bc9ce5175c3263fc2c818b679bd558957f49400ee7be9d4e5ac90487e1625b4932e15c4aa7919c57a
+  languageName: node
+  linkType: hard
+
+"@sideway/pinpoint@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@sideway/pinpoint@npm:2.0.0"
+  checksum: 8/0f4491e5897fcf5bf02c46f5c359c56a314e90ba243f42f0c100437935daa2488f20482f0f77186bd6bf43345095a95d8143ecf8b1f4d876a7bc0806aba9c3d2
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/is@npm:^0.14.0":
   version: 0.14.0
   resolution: "@sindresorhus/is@npm:0.14.0"
@@ -1127,6 +1166,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/body-parser@npm:*":
+  version: 1.19.2
+  resolution: "@types/body-parser@npm:1.19.2"
+  dependencies:
+    "@types/connect": "*"
+    "@types/node": "*"
+  checksum: 8/e17840c7d747a549f00aebe72c89313d09fbc4b632b949b2470c5cb3b1cb73863901ae84d9335b567a79ec5efcfb8a28ff8e3f36bc8748a9686756b6d5681f40
+  languageName: node
+  linkType: hard
+
 "@types/bson@npm:*":
   version: 4.0.3
   resolution: "@types/bson@npm:4.0.3"
@@ -1143,10 +1192,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/joi@npm:^14.3.3":
-  version: 14.3.3
-  resolution: "@types/joi@npm:14.3.3"
-  checksum: bb0ca809e0969a3ebf41123fcba03fff2b5ba553ce78230f4f4499d18f4afc03e32f4860ae0b3c23b0f4b551d76c17cb438dd0edf497f8da6a50b70249523bd9
+"@types/connect@npm:*":
+  version: 3.4.35
+  resolution: "@types/connect@npm:3.4.35"
+  dependencies:
+    "@types/node": "*"
+  checksum: 8/fe81351470f2d3165e8b12ce33542eef89ea893e36dd62e8f7d72566dfb7e448376ae962f9f3ea888547ce8b55a40020ca0e01d637fab5d99567673084542641
+  languageName: node
+  linkType: hard
+
+"@types/express-serve-static-core@npm:^4.17.33":
+  version: 4.17.33
+  resolution: "@types/express-serve-static-core@npm:4.17.33"
+  dependencies:
+    "@types/node": "*"
+    "@types/qs": "*"
+    "@types/range-parser": "*"
+  checksum: 8/dce580d16b85f207445af9d4053d66942b27d0c72e86153089fa00feee3e96ae336b7bedb31ed4eea9e553c99d6dd356ed6e0928f135375d9f862a1a8015adf2
+  languageName: node
+  linkType: hard
+
+"@types/express@npm:^4.17.13":
+  version: 4.17.17
+  resolution: "@types/express@npm:4.17.17"
+  dependencies:
+    "@types/body-parser": "*"
+    "@types/express-serve-static-core": ^4.17.33
+    "@types/qs": "*"
+    "@types/serve-static": "*"
+  checksum: 8/0196dacc275ac3ce89d7364885cb08e7fb61f53ca101f65886dbf1daf9b7eb05c0943e2e4bbd01b0cc5e50f37e0eea7e4cbe97d0304094411ac73e1b7998f4da
+  languageName: node
+  linkType: hard
+
+"@types/hapi__joi@npm:16.x.x":
+  version: 16.0.12
+  resolution: "@types/hapi__joi@npm:16.0.12"
+  checksum: 8/e7f40a2d18fe4e8759311a8710792b5361484c61aa8464f6ea2a30ffbbe5e6124b884bb8105f1741d5fb320e982113b582e1e33937c535e8f6d7fe10bb2d1d1a
   languageName: node
   linkType: hard
 
@@ -1163,6 +1244,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: c1fbfe6e2a8c82656c8fc5782d937c82ed336cdca451c4d7a8d08d245531ad21572024d621b38071d34cfb7461702eea79fcf222a03264f00564d75e78bd348d
+  languageName: node
+  linkType: hard
+
+"@types/mime@npm:*":
+  version: 3.0.1
+  resolution: "@types/mime@npm:3.0.1"
+  checksum: 8/4040fac73fd0cea2460e29b348c1a6173da747f3a87da0dbce80dd7a9355a3d0e51d6d9a401654f3e5550620e3718b5a899b2ec1debf18424e298a2c605346e7
   languageName: node
   linkType: hard
 
@@ -1197,12 +1285,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qs@npm:*":
+  version: 6.9.7
+  resolution: "@types/qs@npm:6.9.7"
+  checksum: 8/7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/range-parser@npm:*":
+  version: 1.2.4
+  resolution: "@types/range-parser@npm:1.2.4"
+  checksum: 8/b7c0dfd5080a989d6c8bb0b6750fc0933d9acabeb476da6fe71d8bdf1ab65e37c136169d84148034802f48378ab94e3c37bb4ef7656b2bec2cb9c0f8d4146a95
+  languageName: node
+  linkType: hard
+
 "@types/responselike@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/responselike@npm:1.0.0"
   dependencies:
     "@types/node": "npm:*"
   checksum: f6e2bc61d2fbeabfd6c5df826e87832aa89f7b190dc993503ff1bbc19608ba75223f4c41c22bfb9500b66e36bf00e7a2c2c0af9e6abba6c2e5bad808eb324d2c
+  languageName: node
+  linkType: hard
+
+"@types/serve-static@npm:*":
+  version: 1.15.1
+  resolution: "@types/serve-static@npm:1.15.1"
+  dependencies:
+    "@types/mime": "*"
+    "@types/node": "*"
+  checksum: 8/2e078bdc1e458c7dfe69e9faa83cc69194b8896cce57cb745016580543c7ab5af07fdaa8ac1765eb79524208c81017546f66056f44d1204f812d72810613de36
   languageName: node
   linkType: hard
 
@@ -3657,15 +3769,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-validation@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "express-validation@npm:1.0.3"
+"express-validation@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "express-validation@npm:4.1.0"
   dependencies:
-    "@types/joi": "npm:^14.3.3"
-    lodash: "npm:^4.17.15"
-  peerDependencies:
-    joi: "*"
-  checksum: a710aa93a8f0098110a7df44140eb292bb676a307cef4405a73ff2ddc6bc9428d521d3a6155a1f451f86dd9e68cde80da41efe1453e510cbeb3a333d9e987ff6
+    "@types/express": ^4.17.13
+    "@types/hapi__joi": 16.x.x
+    joi: ^17.6.0
+  checksum: 8/e5c9a53afe9d375b423893136817ca3e20fce8e4377fd1eeac183419eb967fdbbc2d7fb4eadd5518a888d6239eb387fd7a9adf3a50e6593f45ee359ecbeab9a0
   languageName: node
   linkType: hard
 
@@ -4052,9 +4163,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
@@ -5199,6 +5310,19 @@ __metadata:
     items: "npm:2.x.x"
     topo: "npm:2.x.x"
   checksum: f3adceeb4c64bc3918cccd5fc6d8b33ab6e98af64a65d542cd226f4d42ff41eae975de3872ea30bb7de74633ad1ff8c75b2d40f93e82b7752359b423253b31b1
+  languageName: node
+  linkType: hard
+
+"joi@npm:^17.6.0":
+  version: 17.9.1
+  resolution: "joi@npm:17.9.1"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+    "@hapi/topo": ^5.0.0
+    "@sideway/address": ^4.1.3
+    "@sideway/formula": ^3.0.1
+    "@sideway/pinpoint": ^2.0.0
+  checksum: 8/055df3841e00d7ed065ef1cc3330cf69097ab2ffec3083d8b1d6edfd2e25504bf2983f5249d6f0459bcad99fe21bb0c9f6f1cc03569713af27cd5eb00ee7bb7d
   languageName: node
   linkType: hard
 
@@ -8185,13 +8309,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.1.6#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.13.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.15.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.20.0#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.15.1#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.20.0#~builtin<compat/resolve>":
   version: 1.20.0
-  resolution: "resolve@patch:resolve@npm%3A1.20.0#optional!builtin<compat/resolve>::version=1.20.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=c3c19d"
   dependencies:
     is-core-module: "npm:^2.2.0"
     path-parse: "npm:^1.0.6"
-  checksum: 976d9e2ccefbecc754be43a1d1a6a5e689339ac8fb5c0b2ad0bcf7b78d7ec3da938645efb9d9986c66e760306394ea1a3cdae84aa5d7078714f88a020a5190f2
+  checksum: 8/a0dd7d16a8e47af23afa9386df2dff10e3e0debb2c7299a42e581d9d9b04d7ad5d2c53f24f1e043f7b3c250cbdc71150063e53d0b6559683d37f790b7c8c3cd5
   languageName: node
   linkType: hard
 
