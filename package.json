@@ -10,10 +10,11 @@
     "yarn": "*"
   },
   "scripts": {
-    "precommit": "yarn lint",
+    "precommit": "yarn lint-staged && yarn lint",
     "prestart": "yarn docs",
     "start": "cross-env NODE_ENV=production pm2 start ./src/index.js",
     "dev": "nodemon ./src/index.js",
+    "lint-staged": "prettier --write --ignore-unknown",
     "lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:fix": "yarn lint --fix",
     "lint:watch": "yarn lint --watch",
@@ -65,12 +66,14 @@
     "coveralls": "^3.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.2.0",
     "husky": "^3.0.7",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
     "nyc": "^15.1.0",
     "opn-cli": "^5.0.0",
+    "prettier": "^2.8.7",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.0.0",
     "supertest": "^6.1.3"

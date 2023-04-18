@@ -495,6 +495,7 @@ __metadata:
     email-templates: "npm:^6.0.3"
     eslint: "npm:^7.29.0"
     eslint-config-airbnb-base: "npm:^14.2.0"
+    eslint-config-prettier: "npm:^8.8.0"
     eslint-plugin-import: "npm:^2.2.0"
     express: "npm:^4.15.2"
     express-rate-limit: "npm:^6.7.0"
@@ -519,6 +520,7 @@ __metadata:
     passport-http-bearer: "npm:^1.0.1"
     passport-jwt: "npm:4.0.0"
     pm2: "npm:^5.1.0"
+    prettier: "npm:^2.8.7"
     pug: "npm:^3.0.1"
     sinon: "npm:^7.5.0"
     sinon-chai: "npm:^3.0.0"
@@ -3387,6 +3389,17 @@ __metadata:
     eslint: ^5.16.0 || ^6.8.0 || ^7.2.0
     eslint-plugin-import: ^2.22.1
   checksum: 5d576d8608ad9e0ca0dee060e5a114bb8bc0956f29e3b202af2e5908bbdba2044f748aae417bfcbd5174e84fc648c5333b1a96a6518cca6fdd68823114b2b4f6
+  languageName: node
+  linkType: hard
+
+"eslint-config-prettier@npm:^8.8.0":
+  version: 8.8.0
+  resolution: "eslint-config-prettier@npm:8.8.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 942d0b9d162729967a1816a23107066ae176e5f3f3ebaa3be9fd05cc3dbc1d10e389f127a298fbd564f9cc3e419c9635623a974de9327042289d96469dd91528
   languageName: node
   linkType: hard
 
@@ -7428,6 +7441,15 @@ __metadata:
   version: 2.0.0
   resolution: "prepend-http@npm:2.0.0"
   checksum: c0e029ce18cb1729846c21b3d41d9a366382a386fd1cd07b498657926ee5a4c1f528c3037229069c0b6a8026e0269724d4813fa89878e28a4cd907b3adc0afa7
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.8.7":
+  version: 2.8.7
+  resolution: "prettier@npm:2.8.7"
+  bin:
+    prettier: bin-prettier.js
+  checksum: ec15b2e0a2a34a4987cca4ee72b2df56c7f4a4c62322d9a0f3c9efccb2cc0e3efdb791bb2764f2268e69e05946dc72108e5b5957d4bb2c1a41a11733b8b09153
   languageName: node
   linkType: hard
 
