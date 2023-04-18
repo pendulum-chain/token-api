@@ -68,7 +68,7 @@
     "eslint-plugin-import": "^2.2.0",
     "husky": "^3.0.7",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.1",
+    "nodemon": "^2.0.22",
     "nyc": "^15.1.0",
     "opn-cli": "^5.0.0",
     "prettier": "^2.8.7",
