@@ -6,8 +6,8 @@ require("dotenv-safe").config({
 });
 
 module.exports = {
-  env: process.env.NODE_ENV,
-  port: process.env.PORT,
+  env: process.env.NODE_ENV || "production",
+  port: process.env.PORT || 3000,
   amplitudeWss:
     process.env.AMPLITUDE_WSS || "wss://rpc-amplitude.pendulumchain.tech",
   pendulumWss:
