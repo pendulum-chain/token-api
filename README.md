@@ -5,6 +5,31 @@ This repository contains the code for the Token API.
 The code is based on [this](https://github.com/danielfsousa/express-rest-boilerplate/tree/main) boilerplate
 template.
 
+# API
+
+## Routes
+
+For now, the API only supports the following endpoints:
+
+- `<endpoint>/v1/status`
+- `<endpoint>/v1/:network/token/stats`
+
+The `:network` parameter can be either `pendulum` or `amplitude`.
+
+## Cache
+
+The API uses a cache server to store the token stats.
+The cache server is a memcached instance.
+The server address is defined in the `CACHE_URI` environment variable and the lifetime of cache entries is defined in
+the `CACHE_LIFETIME_SECONDS` environment variable.
+Each network has a different cache key, thus the stats for each network are stored separately.
+
+## Rate limiting
+The API uses a rate limiter to prevent abuse.
+The rate limiter is based on the [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) package.
+It can be configured using the following environment variables. 
+For more details check the respective section below. 
+
 # Getting started
 
 #### Install dependencies:
