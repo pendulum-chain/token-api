@@ -5,8 +5,11 @@ const compress = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const routes = require('../api/routes/v1');
-const { logs } = require('./vars');
+const {
+  logs, rateLimitMaxRequests, rateLimitNumberOfProxies, rateLimitWindowMinutes,
+} = require('./vars');
 const error = require('../api/middlewares/error');
 
 /**
@@ -14,6 +17,18 @@ const error = require('../api/middlewares/error');
  * @public
  */
 const app = express();
+
+// enable rate limiting
+// Set number of expected proxies
+app.set('trust proxy', rateLimitNumberOfProxies);
+// Define rate limiter
+const limiter = rateLimit({
+  windowMs: rateLimitWindowMinutes * 60 * 1000,
+  max: rateLimitMaxRequests, // Limit each IP to <amount> requests per `window`
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(limiter);
 
 // request logging. dev: console | production: file
 app.use(morgan(logs));
@@ -36,7 +51,7 @@ app.use(helmet());
 app.use(cors());
 
 // mount api token routes
-app.use('/api/v1', routes);
+app.use('/v1', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

@@ -497,6 +497,7 @@ __metadata:
     eslint-config-airbnb-base: "npm:^14.2.0"
     eslint-plugin-import: "npm:^2.2.0"
     express: "npm:^4.15.2"
+    express-rate-limit: "npm:^6.7.0"
     express-validation: "npm:^1.0.2"
     helmet: "npm:^4.6.0"
     http-status: "npm:^1.0.1"
@@ -3631,6 +3632,15 @@ __metadata:
     signal-exit: "npm:^3.0.0"
     strip-eof: "npm:^1.0.0"
   checksum: ef5d4a6502fe236441b417ba6ebebf88c992064eddf891cfa50c801868f06e0039708a077b1601f517180cc67c482c878ea857f444d50349b94d71a26faa5db7
+  languageName: node
+  linkType: hard
+
+"express-rate-limit@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "express-rate-limit@npm:6.7.0"
+  peerDependencies:
+    express: ^4 || ^5
+  checksum: 5bee337c88cb81b5ac777664e854254b0885d51d1f88b115b39dcac8b81b0292a453f0865927f9e6ca8dba07246674f188d5e8095a13d1c32f487aae7ddc9bc2
   languageName: node
   linkType: hard
 

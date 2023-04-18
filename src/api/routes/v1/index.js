@@ -13,6 +13,9 @@ router.get('/status', (req, res) => res.send('OK'));
  */
 router.use('/docs', express.static('docs'));
 
+/**
+ * GET v1/:network/token/stats
+ */
 router.use('/:network/token/stats', statsRoutes);
 
 module.exports = router;

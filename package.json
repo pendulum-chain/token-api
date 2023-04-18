@@ -37,6 +37,7 @@
     "dotenv-safe": "^8.2.0",
     "email-templates": "^6.0.3",
     "express": "^4.15.2",
+    "express-rate-limit": "^6.7.0",
     "express-validation": "^1.0.2",
     "helmet": "^4.6.0",
     "http-status": "^1.0.1",
