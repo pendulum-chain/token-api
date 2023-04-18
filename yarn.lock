@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 7
+  version: 6
   cacheKey: 9
 
 "@babel/code-frame@npm:7.12.11":
@@ -297,6 +297,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@colors/colors@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@colors/colors@npm:1.5.0"
+  checksum: 8/d64d5260bed1d5012ae3fc617d38d1afc0329fec05342f4e6b838f46998855ba56e0a73833f4a80fa8378c84810da254f76a8a19c39d038260dc06dc4e007425
+  languageName: node
+  linkType: hard
+
 "@dabh/diagnostics@npm:^2.0.2":
   version: 2.0.2
   resolution: "@dabh/diagnostics@npm:2.0.2"
@@ -479,54 +486,54 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pendulum-network/token-api@workspace:."
   dependencies:
-    "@polkadot/api": "npm:^10.3.4"
-    apidoc: "npm:^0.28.1"
-    axios: "npm:^0.21.1"
-    bcryptjs: "npm:2.4.3"
-    bluebird: "npm:^3.5.0"
-    body-parser: "npm:^1.17.0"
-    chai: "npm:^4.1.0"
-    chai-as-promised: "npm:^7.1.1"
-    compression: "npm:^1.6.2"
-    cors: "npm:^2.8.3"
-    coveralls: "npm:^3.0.0"
-    cross-env: "npm:^7.0.3"
-    dotenv-safe: "npm:^8.2.0"
-    email-templates: "npm:^6.0.3"
-    eslint: "npm:^7.29.0"
-    eslint-config-airbnb-base: "npm:^14.2.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-import: "npm:^2.2.0"
-    express: "npm:^4.15.2"
-    express-rate-limit: "npm:^6.7.0"
-    express-validation: "npm:^1.0.2"
-    helmet: "npm:^4.6.0"
-    http-status: "npm:^1.0.1"
-    husky: "npm:^3.0.7"
-    joi: "npm:^10.4.1"
-    jwt-simple: "npm:0.5.6"
-    lodash: "npm:^4.17.4"
-    memcached: "npm:^2.2.2"
-    method-override: "npm:^3.0.0"
-    mocha: "npm:^6.2.2"
-    moment-timezone: "npm:^0.5.13"
-    mongoose: "npm:^5.2.17"
-    morgan: "npm:^1.8.1"
-    nodemailer: "npm:^6.3.1"
-    nodemon: "npm:^2.0.1"
-    nyc: "npm:^15.1.0"
-    opn-cli: "npm:^5.0.0"
-    passport: "npm:^0.4.0"
-    passport-http-bearer: "npm:^1.0.1"
-    passport-jwt: "npm:4.0.0"
-    pm2: "npm:^5.1.0"
-    prettier: "npm:^2.8.7"
-    pug: "npm:^3.0.1"
-    sinon: "npm:^7.5.0"
-    sinon-chai: "npm:^3.0.0"
-    supertest: "npm:^6.1.3"
-    uuid: "npm:^3.1.0"
-    winston: "npm:^3.1.0"
+    "@polkadot/api": ^10.3.4
+    apidoc: ^0.28.1
+    axios: ^0.21.1
+    bcryptjs: 2.4.3
+    bluebird: ^3.5.0
+    body-parser: ^1.17.0
+    chai: ^4.1.0
+    chai-as-promised: ^7.1.1
+    compression: ^1.6.2
+    cors: ^2.8.3
+    coveralls: ^3.0.0
+    cross-env: ^7.0.3
+    dotenv-safe: ^8.2.0
+    email-templates: ^6.0.3
+    eslint: ^7.29.0
+    eslint-config-airbnb-base: ^14.2.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-import: ^2.2.0
+    express: ^4.15.2
+    express-rate-limit: ^6.7.0
+    express-validation: ^1.0.2
+    helmet: ^4.6.0
+    http-status: ^1.0.1
+    husky: ^3.0.7
+    joi: ^10.4.1
+    jwt-simple: 0.5.6
+    lodash: ^4.17.4
+    memcached: ^2.2.2
+    method-override: ^3.0.0
+    mocha: ^6.2.2
+    moment-timezone: ^0.5.13
+    mongoose: ^5.2.17
+    morgan: ^1.8.1
+    nodemailer: ^6.3.1
+    nodemon: ^2.0.1
+    nyc: ^15.1.0
+    opn-cli: ^5.0.0
+    passport: ^0.4.0
+    passport-http-bearer: ^1.0.1
+    passport-jwt: 4.0.0
+    pm2: ^5.1.0
+    prettier: ^2.8.7
+    pug: ^3.0.1
+    sinon: ^7.5.0
+    sinon-chai: ^3.0.0
+    supertest: ^6.1.3
+    uuid: ^3.1.0
+    winston: ^3.8.2
   languageName: unknown
   linkType: soft
 
@@ -1206,6 +1213,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/triple-beam@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "@types/triple-beam@npm:1.3.2"
+  checksum: 8/dd7b4a563fb710abc992e5d59eac481bed9e303fada2e276e37b00be31c392e03300ee468e57761e616512872e77935f92472877d0704a19688d15a726cee17b
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:1, abbrev@npm:^1.0.0":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -1650,6 +1664,13 @@ __metadata:
   version: 3.2.0
   resolution: "async@npm:3.2.0"
   checksum: 01aaa727c0d2e61ba0fa3eff644b1fa3fe4822d6c6b119013b7cf499a252add3027e2cfe050aa53623f3d848a8a750eacb4e271773ffbd6ac85f40994c6a9421
+  languageName: node
+  linkType: hard
+
+"async@npm:^3.2.3":
+  version: 3.2.4
+  resolution: "async@npm:3.2.4"
+  checksum: 8/43d07459a4e1d09b84a20772414aa684ff4de085cbcaec6eea3c7a8f8150e8c62aa6cd4e699fe8ee93c3a5b324e777d34642531875a0817a35697522c1b02e89
   languageName: node
   linkType: hard
 
@@ -4052,9 +4073,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
@@ -5787,6 +5808,20 @@ __metadata:
     ms: "npm:^2.1.1"
     triple-beam: "npm:^1.3.0"
   checksum: 30df6b207e4bfe4959bf3fb4f1118acaf894a606cb9242878fbf97a4c07d1b3cd439106b2e20cf280e5e6e8c523df294127eda113931d9bd1aef5934a1252115
+  languageName: node
+  linkType: hard
+
+"logform@npm:^2.3.2, logform@npm:^2.4.0":
+  version: 2.5.1
+  resolution: "logform@npm:2.5.1"
+  dependencies:
+    "@colors/colors": 1.5.0
+    "@types/triple-beam": ^1.3.2
+    fecha: ^4.2.0
+    ms: ^2.1.1
+    safe-stable-stringify: ^2.3.1
+    triple-beam: ^1.3.0
+  checksum: 8/08fdf03be5bb69af33bac214eb4f6a0c83ad3821a30de498925fccb61e993e5a4a87470aab356ca2110c11e4643685bed5597ca5f46dd1cd11437c44a0e0e3c2
   languageName: node
   linkType: hard
 
@@ -8185,13 +8220,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.1.6#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.13.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.15.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.20.0#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.15.1#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.20.0#~builtin<compat/resolve>":
   version: 1.20.0
-  resolution: "resolve@patch:resolve@npm%3A1.20.0#optional!builtin<compat/resolve>::version=1.20.0&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=c3c19d"
   dependencies:
     is-core-module: "npm:^2.2.0"
     path-parse: "npm:^1.0.6"
-  checksum: 976d9e2ccefbecc754be43a1d1a6a5e689339ac8fb5c0b2ad0bcf7b78d7ec3da938645efb9d9986c66e760306394ea1a3cdae84aa5d7078714f88a020a5190f2
+  checksum: 8/a0dd7d16a8e47af23afa9386df2dff10e3e0debb2c7299a42e581d9d9b04d7ad5d2c53f24f1e043f7b3c250cbdc71150063e53d0b6559683d37f790b7c8c3cd5
   languageName: node
   linkType: hard
 
@@ -8274,6 +8309,13 @@ __metadata:
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: da8a21b3336a21c152eb3ba8ab41acde5772644f026d4b6e5f9fd8afa4f0cf407c113b19a362580fab9aea8beea295465432fc7684f9ff38aac559bb1b5528cd
+  languageName: node
+  linkType: hard
+
+"safe-stable-stringify@npm:^2.3.1":
+  version: 2.4.3
+  resolution: "safe-stable-stringify@npm:2.4.3"
+  checksum: 8/3aeb64449706ee1f5ad2459fc99648b131d48e7a1fbb608d7c628020177512dc9d94108a5cb61bbc953985d313d0afea6566d243237743e02870490afef04b43
   languageName: node
   linkType: hard
 
@@ -9682,7 +9724,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"winston@npm:^3.1.0, winston@npm:^3.3.3":
+"winston-transport@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "winston-transport@npm:4.5.0"
+  dependencies:
+    logform: ^2.3.2
+    readable-stream: ^3.6.0
+    triple-beam: ^1.3.0
+  checksum: 8/a56e5678a80b88a73e77ed998fc6e19d0db19c989a356b137ec236782f2bf58ae4511b11c29163f99391fa4dc12102c7bc5738dcb6543f28877fa2819adc3ee9
+  languageName: node
+  linkType: hard
+
+"winston@npm:^3.3.3":
   version: 3.3.3
   resolution: "winston@npm:3.3.3"
   dependencies:
@@ -9696,6 +9749,25 @@ __metadata:
     triple-beam: "npm:^1.3.0"
     winston-transport: "npm:^4.4.0"
   checksum: 98e84e80e1d389f64fbdd18bfb18073c33213d4a3fa876b32d1c094d305194b5c4b48db8b4339ebddc38af368fc062e0b9f7942851e2884e6c41f9a43e7549b9
+  languageName: node
+  linkType: hard
+
+"winston@npm:^3.8.2":
+  version: 3.8.2
+  resolution: "winston@npm:3.8.2"
+  dependencies:
+    "@colors/colors": 1.5.0
+    "@dabh/diagnostics": ^2.0.2
+    async: ^3.2.3
+    is-stream: ^2.0.0
+    logform: ^2.4.0
+    one-time: ^1.0.0
+    readable-stream: ^3.4.0
+    safe-stable-stringify: ^2.3.1
+    stack-trace: 0.0.x
+    triple-beam: ^1.3.0
+    winston-transport: ^4.5.0
+  checksum: 8/f7b901798b92ab9e93c850110bf6e98500e9a0e762b62dab410cf928b2a4145533dfa6d3d2b24f7bf0dc94b53808d5bd28aaaeff9a4b43b89ea4c798cce308ea
   languageName: node
   linkType: hard
 
