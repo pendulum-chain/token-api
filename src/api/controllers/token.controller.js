@@ -37,14 +37,15 @@ async function fetchTokenStats(network) {
   });
 
   const format = (n) => {
-    let letters = n.toString(10).padStart(13, "0").slice(0, -9);
-    let str = `${letters.slice(-6, -3)}.${letters.slice(-3)}`;
-    letters = letters.slice(0, -6);
-    while (letters.length) {
-      str = `${letters.slice(-3)},${str}`;
-      letters = letters.slice(0, -3);
+    let formattedNumber = "0";
+    try {
+      // Downscale by 12 decimals
+      const numberInUnits = n / BigInt(10) ** BigInt(12);
+      formattedNumber = numberInUnits.toString();
+    } catch (error) {
+      console.error("Couldn't format number", n, error);
     }
-    return str;
+    return formattedNumber;
   };
 
   return {
@@ -56,10 +57,13 @@ async function fetchTokenStats(network) {
 }
 
 /**
- * Get token stats
- * @public
+ * Handles the querying of token stats and calls the callback with the results.
+ * @param request: {req, res, next}
+ * @param callback: (stats) => undefined
  */
-exports.get = async (req, res, next) => {
+async function tryGetTokenStats(request, callback) {
+  const { req, res, next } = request;
+
   const network = req.params.network
     ? req.params.network.toLowerCase()
     : undefined;
@@ -78,7 +82,7 @@ exports.get = async (req, res, next) => {
     if (memcached.isConnected()) {
       try {
         const stats = await memcached.get(cacheKey);
-        res.json(stats);
+        callback(stats);
         return;
       } catch (error) {
         console.log("Error getting token stats from memcached", error);
@@ -99,8 +103,28 @@ exports.get = async (req, res, next) => {
       }
     }
 
-    res.json(stats);
+    callback(stats);
   } catch (error) {
     next(error);
   }
+}
+
+/**
+ * Get all token stats
+ * @public
+ */
+exports.get = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats);
+  });
+};
+
+/**
+ * Get token totalIssuance
+ * @public
+ */
+exports.getTotalIssuance = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalIssuance);
+  });
 };

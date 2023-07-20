@@ -19,6 +19,7 @@
     "lint:fix": "yarn lint --fix",
     "lint:watch": "yarn lint --watch",
     "test": "echo \"No tests defined yet\" && exit 0",
+    "test:cov": "echo \"No tests defined yet\" && exit 0",
     "validate": "yarn lint && yarn test",
     "postpublish": "git push --tags",
     "docs": "apidoc -i src -o docs",
