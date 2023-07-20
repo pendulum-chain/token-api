@@ -57,101 +57,74 @@ async function fetchTokenStats(network) {
 }
 
 /**
- * Get token stats
+ * Handles the querying of token stats and calls the callback with the results.
+ * @param request: {req, res, next}
+ * @param callback: (stats) => undefined
+ */
+async function tryGetTokenStats(request, callback) {
+  const { req, res, next } = request;
+
+  const network = req.params.network
+    ? req.params.network.toLowerCase()
+    : undefined;
+
+  if (network !== "amplitude" && network !== "pendulum") {
+    res.status(400).json({
+      message: "Invalid network",
+    });
+    return;
+  }
+
+  const baseCacheKey = "token-stats";
+  const cacheKey = `${baseCacheKey}-${network}`;
+
+  try {
+    if (memcached.isConnected()) {
+      try {
+        const stats = await memcached.get(cacheKey);
+        callback(stats);
+        return;
+      } catch (error) {
+        console.log("Error getting token stats from memcached", error);
+        // falling back to normal query
+      }
+    }
+
+    // If memcached is not connected or query failed, do normal query
+    const stats = await fetchTokenStats(network);
+
+    // Cache results if possible
+    if (memcached.isConnected()) {
+      try {
+        console.log("Saving token stats to memcached...");
+        await memcached.set(cacheKey, stats);
+      } catch (error) {
+        console.log("Error saving token stats to memcached", error);
+      }
+    }
+
+    callback(stats);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Get all token stats
  * @public
  */
 exports.get = async (req, res, next) => {
-  const network = req.params.network
-    ? req.params.network.toLowerCase()
-    : undefined;
-
-  if (network !== "amplitude" && network !== "pendulum") {
-    res.status(400).json({
-      message: "Invalid network",
-    });
-    return;
-  }
-
-  const baseCacheKey = "token-stats";
-  const cacheKey = `${baseCacheKey}-${network}`;
-
-  try {
-    if (memcached.isConnected()) {
-      try {
-        const stats = await memcached.get(cacheKey);
-        res.json(stats);
-        return;
-      } catch (error) {
-        console.log("Error getting token stats from memcached", error);
-        // falling back to normal query
-      }
-    }
-
-    // If memcached is not connected or query failed, do normal query
-    const stats = await fetchTokenStats(network);
-
-    // Cache results if possible
-    if (memcached.isConnected()) {
-      try {
-        console.log("Saving token stats to memcached...");
-        await memcached.set(cacheKey, stats);
-      } catch (error) {
-        console.log("Error saving token stats to memcached", error);
-      }
-    }
-
+  tryGetTokenStats({ req, res, next }, (stats) => {
     res.json(stats);
-  } catch (error) {
-    next(error);
-  }
+  });
 };
 
 /**
- * Get token stats totalIssuance
+ * Get token totalIssuance
  * @public
  */
 exports.getTotalIssuance = async (req, res, next) => {
-  const network = req.params.network
-    ? req.params.network.toLowerCase()
-    : undefined;
-
-  if (network !== "amplitude" && network !== "pendulum") {
-    res.status(400).json({
-      message: "Invalid network",
-    });
-    return;
-  }
-
-  const baseCacheKey = "token-stats";
-  const cacheKey = `${baseCacheKey}-${network}`;
-
-  try {
-    if (memcached.isConnected()) {
-      try {
-        const stats = await memcached.get(cacheKey);
-        res.json(stats.totalIssuance);
-        return;
-      } catch (error) {
-        console.log("Error getting token stats from memcached", error);
-        // falling back to normal query
-      }
-    }
-
-    // If memcached is not connected or query failed, do normal query
-    const stats = await fetchTokenStats(network);
-
-    // Cache results if possible
-    if (memcached.isConnected()) {
-      try {
-        console.log("Saving token stats to memcached...");
-        await memcached.set(cacheKey, stats);
-      } catch (error) {
-        console.log("Error saving token stats to memcached", error);
-      }
-    }
-
+  tryGetTokenStats({ req, res, next }, (stats) => {
     res.json(stats.totalIssuance);
-  } catch (error) {
-    next(error);
-  }
+  });
 };
