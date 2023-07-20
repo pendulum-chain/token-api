@@ -37,14 +37,15 @@ async function fetchTokenStats(network) {
   });
 
   const format = (n) => {
-    let letters = n.toString(10).padStart(13, "0").slice(0, -9);
-    let str = `${letters.slice(-6, -3)}.${letters.slice(-3)}`;
-    letters = letters.slice(0, -6);
-    while (letters.length) {
-      str = `${letters.slice(-3)},${str}`;
-      letters = letters.slice(0, -3);
+    let formattedNumber = "0";
+    try {
+      // Downscale by 12 decimals
+      const numberInUnits = n / BigInt(10) ** BigInt(12);
+      formattedNumber = numberInUnits.toString();
+    } catch (error) {
+      console.error("Couldn't format number", n, error);
     }
-    return str;
+    return formattedNumber;
   };
 
   return {
@@ -105,7 +106,6 @@ exports.get = async (req, res, next) => {
   }
 };
 
-
 /**
  * Get token stats totalIssuance
  * @public
@@ -129,8 +129,7 @@ exports.getTotalIssuance = async (req, res, next) => {
     if (memcached.isConnected()) {
       try {
         const stats = await memcached.get(cacheKey);
-        const totalIssuance = { totalIssuance: stats.totalIssuance};
-        res.json(totalIssuance);
+        res.json(stats.totalIssuance);
         return;
       } catch (error) {
         console.log("Error getting token stats from memcached", error);
@@ -151,8 +150,7 @@ exports.getTotalIssuance = async (req, res, next) => {
       }
     }
 
-    const totalIssuance = { totalIssuance: stats.totalIssuance};
-    res.json(totalIssuance);
+    res.json(stats.totalIssuance);
   } catch (error) {
     next(error);
   }
