@@ -104,3 +104,56 @@ exports.get = async (req, res, next) => {
     next(error);
   }
 };
+
+
+/**
+ * Get token stats totalIssuance
+ * @public
+ */
+exports.getTotalIssuance = async (req, res, next) => {
+  const network = req.params.network
+    ? req.params.network.toLowerCase()
+    : undefined;
+
+  if (network !== "amplitude" && network !== "pendulum") {
+    res.status(400).json({
+      message: "Invalid network",
+    });
+    return;
+  }
+
+  const baseCacheKey = "token-stats";
+  const cacheKey = `${baseCacheKey}-${network}`;
+
+  try {
+    if (memcached.isConnected()) {
+      try {
+        const stats = await memcached.get(cacheKey);
+        const totalIssuance = { totalIssuance: stats.totalIssuance};
+        res.json(totalIssuance);
+        return;
+      } catch (error) {
+        console.log("Error getting token stats from memcached", error);
+        // falling back to normal query
+      }
+    }
+
+    // If memcached is not connected or query failed, do normal query
+    const stats = await fetchTokenStats(network);
+
+    // Cache results if possible
+    if (memcached.isConnected()) {
+      try {
+        console.log("Saving token stats to memcached...");
+        await memcached.set(cacheKey, stats);
+      } catch (error) {
+        console.log("Error saving token stats to memcached", error);
+      }
+    }
+
+    const totalIssuance = { totalIssuance: stats.totalIssuance};
+    res.json(totalIssuance);
+  } catch (error) {
+    next(error);
+  }
+};
