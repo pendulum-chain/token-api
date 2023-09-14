@@ -128,3 +128,33 @@ exports.getTotalIssuance = async (req, res, next) => {
     res.json(stats.totalIssuance);
   });
 };
+
+/**
+ * Get token totalTransferable
+ * @public
+ */
+exports.getTotalTransferable = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalTransferable);
+  });
+};
+
+/**
+ * Get token totalLocked
+ * @public
+ */
+exports.getTotalLocked = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalLocked);
+  });
+};
+
+/**
+ * Get token totalReserved
+ * @public
+ */
+exports.getTotalReserved = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalReserved);
+  });
+};
