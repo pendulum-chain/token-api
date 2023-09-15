@@ -1,20 +1,26 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { amplitudeWss, pendulumWss } = require("../../config/vars");
 
-const apiInstance = {};
+const apiInstanceDict = {};
+
+const connectApi = async (socketUrl) => {
+
+    const wsProvider = new WsProvider(socketUrl);
+    return ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+
+}
 
 const getApi = async (network) => {
 
     const websocketUrl = network === "amplitude" ? amplitudeWss : pendulumWss;
 
-    if (!apiInstance[network]) {
+    if (!apiInstanceDict[network]) {
         console.log(`Connecting to node ${websocketUrl}...`);
-        const wsProvider = new WsProvider(websocketUrl);
-        apiInstance[network] = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+        apiInstanceDict[network] = await connectApi(websocketUrl);
         console.log(`Connected to node ${websocketUrl}`);
     }
 
-    return apiInstance[network];
+    return apiInstanceDict[network];
 };
 
 const executeApiCall = async (network, apiCall) => {
@@ -28,8 +34,7 @@ const executeApiCall = async (network, apiCall) => {
     } catch (initialError) {
         try {
             console.log(`Attempting to reconnect to node ${websocketUrl}...`);
-            const wsProvider = new WsProvider(websocketUrl);
-            apiInstance = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+            apiInstanceDict[network] = await connectApi(websocketUrl);
             console.log(`Reconnected to node ${websocketUrl}`);
 
             return await apiCall(apiInstance);
