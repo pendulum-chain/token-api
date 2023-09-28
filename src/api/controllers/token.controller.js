@@ -1,21 +1,11 @@
-const { ApiPromise, WsProvider } = require("@polkadot/api");
 const memcached = require("../../config/memcached");
-const { amplitudeWss, pendulumWss } = require("../../config/vars");
+const { executeApiCall } = require("../services/rpc.service");
 
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
 
-  const websocketUrl = network === "amplitude" ? amplitudeWss : pendulumWss;
 
-  const wsProvider = new WsProvider(websocketUrl);
-  console.log(`Connecting to node ${websocketUrl}...`);
-  const api = await ApiPromise.create({
-    provider: wsProvider,
-    noInitWarn: true,
-  });
-  console.log(`Connected to node ${websocketUrl}`);
-
-  const accounts = await api.query.system.account.entries();
+  const accounts = await executeApiCall(network, api => api.query.system.account.entries());
 
   let totalIssuance = BigInt(0);
   let totalTransferable = BigInt(0);
@@ -126,5 +116,35 @@ exports.get = async (req, res, next) => {
 exports.getTotalIssuance = async (req, res, next) => {
   tryGetTokenStats({ req, res, next }, (stats) => {
     res.json(stats.totalIssuance);
+  });
+};
+
+/**
+ * Get token totalTransferable
+ * @public
+ */
+exports.getTotalTransferable = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalTransferable);
+  });
+};
+
+/**
+ * Get token totalLocked
+ * @public
+ */
+exports.getTotalLocked = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalLocked);
+  });
+};
+
+/**
+ * Get token totalReserved
+ * @public
+ */
+exports.getTotalReserved = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalReserved);
   });
 };
