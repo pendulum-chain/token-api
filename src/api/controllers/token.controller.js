@@ -1,5 +1,6 @@
 const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
+const {ACCOUNTS_TO_SUBSTRACT_AMPLITUDE, ACCOUNTS_TO_SUBSTRACT_PENDULUM} = require("../utils/circulating_accounts_to_ignore");
 
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
@@ -11,14 +12,32 @@ async function fetchTokenStats(network) {
   let totalTransferable = BigInt(0);
   let totalLocked = BigInt(0);
   let totalReserved = BigInt(0);
+  let supplyToIgnore = BigInt(0);
 
   accounts.forEach((entry) => {
+    const account = entry[0].toHuman()[0]
     const balances = entry[1].toHuman().data;
     const miscFrozen = BigInt(balances.miscFrozen.replace(/,/g, ""));
     const feeFrozen = BigInt(balances.feeFrozen.replace(/,/g, ""));
     const frozen = miscFrozen > feeFrozen ? miscFrozen : feeFrozen;
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
+
+    // We mantain the supplyToIgnore to substract it from the total transferable
+    let accountsToSubstract = [];
+    if (network === "amplitude") {
+      accountsToSubstract = ACCOUNTS_TO_SUBSTRACT_AMPLITUDE;
+    } else if (network === "pendulum") {
+      accountsToSubstract = ACCOUNTS_TO_SUBSTRACT_PENDULUM;
+    } else {
+      console.error("Invalid network");
+    }
+    // Supply to ignore is the sum of the free - frozen of the accounts to substract
+    // which would otherwise end up in the total transferable variable
+    // that we define here as the circulating supply
+    if (accountsToSubstract.includes(String(account))) {
+      supplyToIgnore += free - frozen;
+    }
 
     totalIssuance += free + reserved;
     totalTransferable += free - frozen;
@@ -43,6 +62,7 @@ async function fetchTokenStats(network) {
     totalTransferable: format(totalTransferable),
     totalLocked: format(totalLocked),
     totalReserved: format(totalReserved),
+    totalCirculating: format(totalTransferable-supplyToIgnore),
   };
 }
 
@@ -146,5 +166,15 @@ exports.getTotalLocked = async (req, res, next) => {
 exports.getTotalReserved = async (req, res, next) => {
   tryGetTokenStats({ req, res, next }, (stats) => {
     res.json(stats.totalReserved);
+  });
+};
+
+/**
+ * Get token cirulating supply
+ * @public
+ */
+exports.getCirculatingSupply = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalCirculating);
   });
 };
