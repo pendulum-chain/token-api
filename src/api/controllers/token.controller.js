@@ -32,9 +32,11 @@ async function fetchTokenStats(network) {
     } else {
       console.error("Invalid network");
     }
-    // Supply to ignore is the sum of the free - frozen of the accounts to substract
-    // which would otherwise end up in the total transferable variable
-    // that we define here as the circulating supply
+
+    // We define the circulating supply as the total transferable (free - frozen) minus 
+    // the total transferable of a set of predefined multisig accounts (https://github.com/pendulum-chain/tasks/issues/242)
+    // We keep track of the transferable of these accounts
+    // which will then will be substratect to the total transferable
     if (accountsToSubstract.includes(String(account))) {
       supplyToIgnore += free - frozen;
     }
