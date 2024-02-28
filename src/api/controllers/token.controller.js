@@ -23,7 +23,7 @@ async function fetchTokenStats(network) {
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
 
-    // We mantain the supplyToIgnore to substract it from the total transferable
+    // We maintain the supplyToIgnore to substract it from the total transferable
     let accountsToSubstract = [];
     if (network === "amplitude") {
       accountsToSubstract = ACCOUNTS_TO_SUBSTRACT_AMPLITUDE;
