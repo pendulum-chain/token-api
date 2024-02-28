@@ -67,7 +67,7 @@ router
   .route("/circulatingsupply")
   /**
    * @api {get} token/stats/circulatingsupply Token circulating supply
-   * @apiDescription Get the current token adjusted circulating supply
+   * @apiDescription Get the current token stats for adjusted circulating supply
    * @apiVersion 1.0.0
    * @apiName ListTokenStatsCirculatingSupply
    *

@@ -1,6 +1,6 @@
 const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
-const {ACCOUNTS_TO_SUBSTRACT_AMPLITUDE, ACCOUNTS_TO_SUBSTRACT_PENDULUM} = require("../utils/circulating_accounts_to_ignore");
+const {ACCOUNTS_TO_SUBTRACT_AMPLITUDE, ACCOUNTS_TO_SUBTRACT_PENDULUM} = require("../utils/constants");
 
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
@@ -23,12 +23,12 @@ async function fetchTokenStats(network) {
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
 
-    // We maintain the supplyToIgnore to substract it from the total transferable
-    let accountsToSubstract = [];
+    // We mantain the supplyToIgnore to subtract it from the total transferable
+    let accountsToSubtract = [];
     if (network === "amplitude") {
-      accountsToSubstract = ACCOUNTS_TO_SUBSTRACT_AMPLITUDE;
+      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_AMPLITUDE;
     } else if (network === "pendulum") {
-      accountsToSubstract = ACCOUNTS_TO_SUBSTRACT_PENDULUM;
+      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM;
     } else {
       console.error("Invalid network");
     }
@@ -36,8 +36,8 @@ async function fetchTokenStats(network) {
     // We define the circulating supply as the total transferable (free - frozen) minus 
     // the total transferable of a set of predefined multisig accounts (https://github.com/pendulum-chain/tasks/issues/242)
     // We keep track of the transferable of these accounts
-    // which will then will be substratect to the total transferable
-    if (accountsToSubstract.includes(String(account))) {
+    // which will then be subtracted from the total transferable
+    if (accountsToSubtract.includes(String(account))) {
       supplyToIgnore += free - frozen;
     }
 
