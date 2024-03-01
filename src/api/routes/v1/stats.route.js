@@ -63,4 +63,17 @@ router
    */
   .get(controller.getTotalReserved);
 
+router
+  .route("/circulatingsupply")
+  /**
+   * @api {get} token/stats/circulatingsupply Token circulating supply
+   * @apiDescription Get the current token stats for adjusted circulating supply
+   * @apiVersion 1.0.0
+   * @apiName ListTokenStatsCirculatingSupply
+   *
+   * @apiSuccess {Object[]} tokenStats List of token stats total adjusted circulating supply.
+   */
+  .get(controller.getCirculatingSupply);
+
 module.exports = router;
+

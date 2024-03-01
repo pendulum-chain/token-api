@@ -1,0 +1,21 @@
+const ACCOUNTS_TO_SUBTRACT_PENDULUM = [
+    "6cY3Zrb2gr1xt3BczzJ3xoMpF7UyrcGNfR3cjkjcF7auq2Y9",
+    "6gfLdZvfW2w6fDaPpVfUs53W8Aay17s1bjwcFaqDaBVt7Muo",
+    "6biLQnLREwRd9aSPiN9xxR2UDCPa1XL3ZSwqNUxNEr3QvGDk",
+    "6eiGivQB9dtQUMs1VpxATipDYrewWSr4kGsvgjELgqnvRYyx",
+    "6gKuTtzLBtgYyW3SP6jh7DnXbNU8fDVFG2AxHCLbGYqaspe7",
+    "6cGTMDwqhePxUw5Fgfz8zHhJUhW7xkLRASSt6cwUmbSL137U",
+    "6gB6fuaAazhhctdcEfUmQDqHkzYBsdSHFoe7TAv8wSNdAgMx",
+    "6cABSUjhvnGP6fHrs8LRtzbvrvG9o9AtA92aakSSYpPtjP58",
+    "6gKxy1JM3FeUU9SB9BtQEzH8XTTZBPmyEjYYJBVFae23je5h",
+    "6eS2NM9rpKgM7HKVc5aksfSfyMqLWbKmqiavxQ9wxfvDnN7Y",
+    "6cE1nHQu9XRH6pUSjMejCUzF39XqFx3HwgZNTMHNTZZw2c7M",
+]
+
+const ACCOUNTS_TO_SUBTRACT_AMPLITUDE = [
+]
+
+module.exports = {
+    ACCOUNTS_TO_SUBTRACT_PENDULUM,
+    ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
+}

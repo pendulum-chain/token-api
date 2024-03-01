@@ -1,5 +1,6 @@
 const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
+const {ACCOUNTS_TO_SUBTRACT_AMPLITUDE, ACCOUNTS_TO_SUBTRACT_PENDULUM} = require("../utils/constants");
 
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
@@ -11,14 +12,34 @@ async function fetchTokenStats(network) {
   let totalTransferable = BigInt(0);
   let totalLocked = BigInt(0);
   let totalReserved = BigInt(0);
+  let supplyToIgnore = BigInt(0);
 
   accounts.forEach((entry) => {
+    const account = entry[0].toHuman()[0]
     const balances = entry[1].toHuman().data;
     const miscFrozen = BigInt(balances.miscFrozen.replace(/,/g, ""));
     const feeFrozen = BigInt(balances.feeFrozen.replace(/,/g, ""));
     const frozen = miscFrozen > feeFrozen ? miscFrozen : feeFrozen;
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
+
+    // We mantain the supplyToIgnore to subtract it from the total transferable
+    let accountsToSubtract = [];
+    if (network === "amplitude") {
+      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_AMPLITUDE;
+    } else if (network === "pendulum") {
+      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM;
+    } else {
+      console.error("Invalid network");
+    }
+
+    // We define the circulating supply as the total transferable (free - frozen) minus 
+    // the total transferable of a set of predefined multisig accounts (https://github.com/pendulum-chain/tasks/issues/242)
+    // We keep track of the transferable of these accounts
+    // which will then be subtracted from the total transferable
+    if (accountsToSubtract.includes(String(account))) {
+      supplyToIgnore += free - frozen;
+    }
 
     totalIssuance += free + reserved;
     totalTransferable += free - frozen;
@@ -43,6 +64,7 @@ async function fetchTokenStats(network) {
     totalTransferable: format(totalTransferable),
     totalLocked: format(totalLocked),
     totalReserved: format(totalReserved),
+    totalCirculating: format(totalTransferable-supplyToIgnore),
   };
 }
 
@@ -146,5 +168,15 @@ exports.getTotalLocked = async (req, res, next) => {
 exports.getTotalReserved = async (req, res, next) => {
   tryGetTokenStats({ req, res, next }, (stats) => {
     res.json(stats.totalReserved);
+  });
+};
+
+/**
+ * Get token cirulating supply
+ * @public
+ */
+exports.getCirculatingSupply = async (req, res, next) => {
+  tryGetTokenStats({ req, res, next }, (stats) => {
+    res.json(stats.totalCirculating);
   });
 };
