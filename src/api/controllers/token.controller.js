@@ -17,7 +17,6 @@ async function fetchTokenStats(network) {
   accounts.forEach((entry) => {
     const account = entry[0].toHuman()[0]
     const balances = entry[1].toHuman().data;
-    console.log(balances)
     const frozen = BigInt(balances.frozen.replace(/,/g, ""));
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
