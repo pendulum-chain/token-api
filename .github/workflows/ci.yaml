@@ -20,7 +20,7 @@ jobs:
           restore-keys: ${{ runner.os }}-node-
 
       - name: Install packages
-        run: npm ci
+        run: yarn
 
       - name: Run lint
         run: npm run lint
