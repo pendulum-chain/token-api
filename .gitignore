@@ -1,6 +1,8 @@
 # Use yarn.lock instead
 package-lock.json
 
+.yarn
+
 # Environment variables
 .env
 

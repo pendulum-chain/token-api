@@ -9,6 +9,7 @@
     "node": ">=12",
     "yarn": "*"
   },
+  "packageManager": "yarn@4.5.0+sha512.837566d24eec14ec0f5f1411adb544e892b3454255e61fdef8fd05f3429480102806bac7446bc9daff3896b01ae4b62d00096c7e989f1596f2af10b927532f39",
   "scripts": {
     "precommit": "yarn lint-staged && yarn lint",
     "prestart": "yarn docs",
@@ -26,7 +27,7 @@
     "postdocs": "open-cli docs/index.html"
   },
   "dependencies": {
-    "@polkadot/api": "^10.12.6",
+    "@polkadot/api": "^13.2.1",
     "axios": "^0.21.1",
     "bcryptjs": "2.4.3",
     "bluebird": "^3.5.0",
