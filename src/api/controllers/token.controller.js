@@ -1,12 +1,33 @@
 const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
-const {ACCOUNTS_TO_SUBTRACT_AMPLITUDE, ACCOUNTS_TO_SUBTRACT_PENDULUM} = require("../utils/constants");
+const {
+  ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
+  ACCOUNTS_TO_SUBTRACT_PENDULUM,
+} = require("../utils/constants");
+const { Keyring } = require("@polkadot/api");
+
+function getAddressForFormat(address, ss58Format) {
+  if (typeof ss58Format === "string") {
+    ss58Format = parseInt(ss58Format, 10);
+  }
+
+  try {
+    const keyring = new Keyring();
+    const encodedAddress = keyring.encodeAddress(address, ss58Format);
+    return encodedAddress;
+  } catch (error) {
+    // Assumed to be EVM address.
+    console.error(`Error encoding address ${address}: ${error}`);
+    return address;
+  }
+}
 
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
 
-
-  const accounts = await executeApiCall(network, api => api.query.system.account.entries());
+  const accounts = await executeApiCall(network, (api) =>
+    api.query.system.account.entries()
+  );
 
   let totalIssuance = BigInt(0);
   let totalTransferable = BigInt(0);
@@ -15,7 +36,7 @@ async function fetchTokenStats(network) {
   let supplyToIgnore = BigInt(0);
 
   accounts.forEach((entry) => {
-    const account = entry[0].toHuman()[0]
+    const account = entry[0].toHuman()[0];
     const balances = entry[1].toHuman().data;
     const frozen = BigInt(balances.frozen.replace(/,/g, ""));
     const free = BigInt(balances.free.replace(/,/g, ""));
@@ -31,12 +52,17 @@ async function fetchTokenStats(network) {
       console.error("Invalid network");
     }
 
-    // We define the circulating supply as the total transferable (free - frozen) minus 
+    // We define the circulating supply as the total transferable (free - frozen) minus
     // the total transferable of a set of predefined multisig accounts (https://github.com/pendulum-chain/tasks/issues/242)
     // We keep track of the transferable of these accounts
     // which will then be subtracted from the total transferable
-    if (accountsToSubtract.includes(String(account))) {
-      supplyToIgnore += free - frozen;
+    for (const accountToSubtract of accountsToSubtract) {
+      if (
+        getAddressForFormat(accountToSubtract, 0) ===
+        getAddressForFormat(account, 0)
+      ) {
+        supplyToIgnore += free - frozen;
+      }
     }
 
     totalIssuance += free + reserved;
@@ -62,7 +88,7 @@ async function fetchTokenStats(network) {
     totalTransferable: format(totalTransferable),
     totalLocked: format(totalLocked),
     totalReserved: format(totalReserved),
-    totalCirculating: format(totalTransferable-supplyToIgnore),
+    totalCirculating: format(totalTransferable - supplyToIgnore),
   };
 }
 
