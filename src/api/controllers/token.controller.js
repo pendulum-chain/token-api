@@ -3,6 +3,7 @@ const { executeApiCall } = require("../services/rpc.service");
 const {
   ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
   ACCOUNTS_TO_SUBTRACT_PENDULUM,
+  TREASURY_ACCOUNT,
 } = require("../utils/constants");
 const { Keyring } = require("@polkadot/api");
 
@@ -61,7 +62,15 @@ async function fetchTokenStats(network) {
         getAddressForFormat(accountToSubtract, 0) ===
         getAddressForFormat(account, 0)
       ) {
-        supplyToIgnore += free - frozen;
+        if (
+          getAddressForFormat(accountToSubtract, 0) ===
+          getAddressForFormat(TREASURY_ACCOUNT, 0)
+        ) {
+          // Exclude treasury balance from transferable tokens
+          totalTransferable -= free;
+        } else {
+          supplyToIgnore += free - frozen;
+        }
       }
     }
 
