@@ -23,6 +23,18 @@ function getAddressForFormat(address, ss58Format) {
   }
 }
 
+const format = (n) => {
+  let formattedNumber = "0";
+  try {
+    // Downscale by 12 decimals
+    const numberInUnits = n / BigInt(10) ** BigInt(12);
+    formattedNumber = numberInUnits.toString();
+  } catch (error) {
+    console.error("Couldn't format number", n, error);
+  }
+  return formattedNumber;
+};
+
 async function fetchTokenStats(network) {
   console.log(`Fetching token stats for network ${network}`);
 
@@ -69,7 +81,9 @@ async function fetchTokenStats(network) {
           // Exclude treasury balance from transferable tokens
           totalTransferable -= free;
         } else {
-          supplyToIgnore += free - frozen;
+          const transferable = free - frozen;
+          console.log(`Adding account ${account} with transferable ${format(transferable)} to supplyToIgnore`);
+          supplyToIgnore += transferable;
         }
       }
     }
@@ -80,17 +94,7 @@ async function fetchTokenStats(network) {
     totalReserved += reserved;
   });
 
-  const format = (n) => {
-    let formattedNumber = "0";
-    try {
-      // Downscale by 12 decimals
-      const numberInUnits = n / BigInt(10) ** BigInt(12);
-      formattedNumber = numberInUnits.toString();
-    } catch (error) {
-      console.error("Couldn't format number", n, error);
-    }
-    return formattedNumber;
-  };
+  console.log("Total supply to ignore:", format(supplyToIgnore));
 
   return {
     totalIssuance: format(totalIssuance),
