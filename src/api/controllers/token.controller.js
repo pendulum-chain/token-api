@@ -26,9 +26,20 @@ function getAddressForFormat(address, ss58Format) {
 const format = (n) => {
   let formattedNumber = "0";
   try {
-    // Downscale by 12 decimals
-    const numberInUnits = n / BigInt(10) ** BigInt(12);
-    formattedNumber = numberInUnits.toString();
+    const decimals = 12;
+    const precision = 3;
+    const divisor = BigInt(10) ** BigInt(decimals);
+    const precisionDivisor = BigInt(10) ** BigInt(decimals - precision);
+
+    const integerPart = n / divisor;
+    const fractionalPart = (n % divisor) / precisionDivisor;
+
+    formattedNumber = `${integerPart}.${fractionalPart
+      .toString()
+      .padStart(precision, "0")}`;
+
+    // Remove trailing zeros and dot if necessary
+    formattedNumber = formattedNumber.replace(/\.?0+$/, "");
   } catch (error) {
     console.error("Couldn't format number", n, error);
   }
