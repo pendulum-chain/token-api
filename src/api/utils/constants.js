@@ -1,25 +1,32 @@
+// Since the tokens are all fully vested already, we don't need to subtract these accounts anymore
+const ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD = [
+  "6cY3Zrb2gr1xt3BczzJ3xoMpF7UyrcGNfR3cjkjcF7auq2Y9",
+  "6gfLdZvfW2w6fDaPpVfUs53W8Aay17s1bjwcFaqDaBVt7Muo",
+  "6biLQnLREwRd9aSPiN9xxR2UDCPa1XL3ZSwqNUxNEr3QvGDk",
+  "6eiGivQB9dtQUMs1VpxATipDYrewWSr4kGsvgjELgqnvRYyx",
+  "6gKuTtzLBtgYyW3SP6jh7DnXbNU8fDVFG2AxHCLbGYqaspe7",
+  "6cGTMDwqhePxUw5Fgfz8zHhJUhW7xkLRASSt6cwUmbSL137U",
+  "6gB6fuaAazhhctdcEfUmQDqHkzYBsdSHFoe7TAv8wSNdAgMx",
+  "6cABSUjhvnGP6fHrs8LRtzbvrvG9o9AtA92aakSSYpPtjP58",
+  "6gKxy1JM3FeUU9SB9BtQEzH8XTTZBPmyEjYYJBVFae23je5h",
+  "6eS2NM9rpKgM7HKVc5aksfSfyMqLWbKmqiavxQ9wxfvDnN7Y",
+  "6cE1nHQu9XRH6pUSjMejCUzF39XqFx3HwgZNTMHNTZZw2c7M",
+  "6dZRnXfN7nnrAUDWykWc7gpHpByVBj9HTRpFNNQyENh11xjq",
+  "145rcqBKpVRTTtiuT8tGWnqcYLQhkspdQemnKAeVo1g7zo42",
+];
+
+// This is the updated list only included the SP team account
 const ACCOUNTS_TO_SUBTRACT_PENDULUM = [
-    "6cY3Zrb2gr1xt3BczzJ3xoMpF7UyrcGNfR3cjkjcF7auq2Y9",
-    "6gfLdZvfW2w6fDaPpVfUs53W8Aay17s1bjwcFaqDaBVt7Muo",
-    "6biLQnLREwRd9aSPiN9xxR2UDCPa1XL3ZSwqNUxNEr3QvGDk",
-    "6eiGivQB9dtQUMs1VpxATipDYrewWSr4kGsvgjELgqnvRYyx",
-    "6gKuTtzLBtgYyW3SP6jh7DnXbNU8fDVFG2AxHCLbGYqaspe7",
-    "6cGTMDwqhePxUw5Fgfz8zHhJUhW7xkLRASSt6cwUmbSL137U",
-    "6gB6fuaAazhhctdcEfUmQDqHkzYBsdSHFoe7TAv8wSNdAgMx",
-    "6cABSUjhvnGP6fHrs8LRtzbvrvG9o9AtA92aakSSYpPtjP58",
-    "6gKxy1JM3FeUU9SB9BtQEzH8XTTZBPmyEjYYJBVFae23je5h",
-    "6eS2NM9rpKgM7HKVc5aksfSfyMqLWbKmqiavxQ9wxfvDnN7Y",
-    "6cE1nHQu9XRH6pUSjMejCUzF39XqFx3HwgZNTMHNTZZw2c7M",
-    "6dZRnXfN7nnrAUDWykWc7gpHpByVBj9HTRpFNNQyENh11xjq", 
-]
+  "16aQA1c5yjxPuvvR6gQ9ic9hvzaVvrbs34vFoJpMeJCaMEZn",
+];
 
-const TREASURY_ACCOUNT = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB"
+const TREASURY_ACCOUNT = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB";
 
-const ACCOUNTS_TO_SUBTRACT_AMPLITUDE = [
-]
+const ACCOUNTS_TO_SUBTRACT_AMPLITUDE = [];
 
 module.exports = {
-    ACCOUNTS_TO_SUBTRACT_PENDULUM,
-    ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
-    TREASURY_ACCOUNT,
-}
+  ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD,
+  ACCOUNTS_TO_SUBTRACT_PENDULUM,
+  ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
+  TREASURY_ACCOUNT,
+};

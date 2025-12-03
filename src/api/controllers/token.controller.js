@@ -2,7 +2,7 @@ const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
 const {
   ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
-  ACCOUNTS_TO_SUBTRACT_PENDULUM,
+  ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD,
   TREASURY_ACCOUNT,
 } = require("../utils/constants");
 const { Keyring } = require("@polkadot/api");
@@ -48,6 +48,23 @@ async function fetchTokenStats(network) {
   let totalReserved = BigInt(0);
   let supplyToIgnore = BigInt(0);
 
+  // We mantain the supplyToIgnore to subtract it from the total transferable
+  let accountsToSubtract = [];
+  console.log("network", network)
+  if (network === "amplitude") {
+    accountsToSubtract = ACCOUNTS_TO_SUBTRACT_AMPLITUDE;
+  } else if (network === "pendulum") {
+    accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD;
+  } else {
+    console.error("Invalid network");
+  }
+
+  // Ensure TREASURY_ACCOUNT is always excluded
+  if (TREASURY_ACCOUNT) {
+    console.log("accountsToSubtract", accountsToSubtract);
+    accountsToSubtract.push(TREASURY_ACCOUNT);
+  }
+
   accounts.forEach((entry) => {
     const account = entry[0].toHuman()[0];
     const balances = entry[1].toHuman().data;
@@ -55,37 +72,21 @@ async function fetchTokenStats(network) {
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
 
-    // We mantain the supplyToIgnore to subtract it from the total transferable
-    let accountsToSubtract = [];
-    if (network === "amplitude") {
-      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_AMPLITUDE;
-    } else if (network === "pendulum") {
-      accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM;
-    } else {
-      console.error("Invalid network");
-    }
+    // We define the circulating supply as the total issuance minus
+    // the total balance (free + reserved) of a set of predefined accounts
+    // We use a Set to ensure we don't double count if TREASURY_ACCOUNT is also in the list
+    const uniqueAccountsToSubtract = new Set(
+      accountsToSubtract.map((a) => getAddressForFormat(a, 0))
+    );
 
-    // We define the circulating supply as the total transferable (free - frozen) minus
-    // the total transferable of a set of predefined multisig accounts (https://github.com/pendulum-chain/tasks/issues/242)
-    // We keep track of the transferable of these accounts
-    // which will then be subtracted from the total transferable
-    for (const accountToSubtract of accountsToSubtract) {
-      if (
-        getAddressForFormat(accountToSubtract, 0) ===
-        getAddressForFormat(account, 0)
-      ) {
-        if (
-          getAddressForFormat(accountToSubtract, 0) ===
-          getAddressForFormat(TREASURY_ACCOUNT, 0)
-        ) {
-          // Exclude treasury balance from transferable tokens
-          totalTransferable -= free;
-        } else {
-          const transferable = free - frozen;
-          console.log(`Adding account ${account} with transferable ${format(transferable)} to supplyToIgnore`);
-          supplyToIgnore += transferable;
-        }
-      }
+    if (uniqueAccountsToSubtract.has(getAddressForFormat(account, 0))) {
+      const totalBalance = free + reserved;
+      console.log(
+        `Adding account ${account} with total balance ${format(
+          totalBalance
+        )} to supplyToIgnore`
+      );
+      supplyToIgnore += totalBalance;
     }
 
     totalIssuance += free + reserved;
@@ -101,7 +102,7 @@ async function fetchTokenStats(network) {
     totalTransferable: format(totalTransferable),
     totalLocked: format(totalLocked),
     totalReserved: format(totalReserved),
-    totalCirculating: format(totalTransferable - supplyToIgnore),
+    totalCirculating: format(totalIssuance - supplyToIgnore),
   };
 }
 
