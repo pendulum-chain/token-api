@@ -1,5 +1,5 @@
 // Since the tokens are all fully vested already, we don't need to subtract these accounts anymore
-const ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD = [
+const ACCOUNTS_TO_SUBTRACT_PENDULUM = [
   "6cY3Zrb2gr1xt3BczzJ3xoMpF7UyrcGNfR3cjkjcF7auq2Y9",
   "6gfLdZvfW2w6fDaPpVfUs53W8Aay17s1bjwcFaqDaBVt7Muo",
   "6biLQnLREwRd9aSPiN9xxR2UDCPa1XL3ZSwqNUxNEr3QvGDk",
@@ -15,17 +15,11 @@ const ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD = [
   "145rcqBKpVRTTtiuT8tGWnqcYLQhkspdQemnKAeVo1g7zo42",
 ];
 
-// This is the updated list only included the SP team account
-const ACCOUNTS_TO_SUBTRACT_PENDULUM = [
-  "16aQA1c5yjxPuvvR6gQ9ic9hvzaVvrbs34vFoJpMeJCaMEZn",
-];
-
 const TREASURY_ACCOUNT = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB";
 
 const ACCOUNTS_TO_SUBTRACT_AMPLITUDE = [];
 
 module.exports = {
-  ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD,
   ACCOUNTS_TO_SUBTRACT_PENDULUM,
   ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
   TREASURY_ACCOUNT,

@@ -2,7 +2,7 @@ const memcached = require("../../config/memcached");
 const { executeApiCall } = require("../services/rpc.service");
 const {
   ACCOUNTS_TO_SUBTRACT_AMPLITUDE,
-  ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD,
+  ACCOUNTS_TO_SUBTRACT_PENDULUM,
   TREASURY_ACCOUNT,
 } = require("../utils/constants");
 const { Keyring } = require("@polkadot/api");
@@ -23,11 +23,10 @@ function getAddressForFormat(address, ss58Format) {
   }
 }
 
-const format = (n) => {
+const format = (n, precision = 0) => {
   let formattedNumber = "0";
   try {
     const decimals = 12;
-    const precision = 3;
     const divisor = BigInt(10) ** BigInt(decimals);
     const precisionDivisor = BigInt(10) ** BigInt(decimals - precision);
 
@@ -65,7 +64,7 @@ async function fetchTokenStats(network) {
   if (network === "amplitude") {
     accountsToSubtract = ACCOUNTS_TO_SUBTRACT_AMPLITUDE;
   } else if (network === "pendulum") {
-    accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM_OLD;
+    accountsToSubtract = ACCOUNTS_TO_SUBTRACT_PENDULUM;
   } else {
     console.error("Invalid network");
   }
@@ -94,7 +93,7 @@ async function fetchTokenStats(network) {
       const totalBalance = free + reserved;
       console.log(
         `Adding account ${account} with total balance ${format(
-          totalBalance
+          totalBalance, 3
         )} to supplyToIgnore`
       );
       supplyToIgnore += totalBalance;
@@ -106,7 +105,7 @@ async function fetchTokenStats(network) {
     totalReserved += reserved;
   });
 
-  console.log("Total supply to ignore:", format(supplyToIgnore));
+  console.log("Total supply to ignore:", format(supplyToIgnore, 3));
 
   return {
     totalIssuance: format(totalIssuance),
